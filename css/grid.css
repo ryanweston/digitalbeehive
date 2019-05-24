@@ -1,0 +1,97 @@
+/* -- DEFAULTS -- */
+
+div, ul, li, a{
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  text-decoration:none;
+}
+
+/* -- FLUID GRID STYLES -- */
+
+#Grid{
+  margin-bottom: 4px;
+  text-align: justify;
+  font-size: 0.1px;
+  padding:0rem 2rem 0rem 2rem;
+}
+
+#Grid li{
+  display: inline-block;
+  width: 31%;
+  padding-top: 15%; /* Used instead of height to give elements fluid, width-based height */
+  margin-bottom: 4%;
+}
+
+#Grid li:hover {
+ opacity:1;
+}
+
+.one {
+  background-image:url("../img/gimmea.png");
+  background-size:contain;
+  background-position:center center;
+  opacity:0.5;
+}
+
+.two {
+  background-image:url("../img/plymuni.png");
+  background-size:contain;
+  background-position:center center;
+  opacity:0.5;
+}
+
+.three {
+  background-image:url("../img/beehive.png");
+  background-size:contain;
+  background-position:center center;
+  opacity:0.5;
+}
+
+.empty, .empty a:hover{
+  background-color:#DDD;
+  cursor:default;
+}
+
+#Grid:after{
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+#Grid .placeholder{
+  padding: 0;
+  border-top: 10px solid #922d8d; /* Border added to make element visible for demonstration purposes */
+}
+
+/* -- MEDIA QUERIES DEFINING RESPONSIVE LAYOUTS -- */
+
+/* 3 COL */
+
+@media (max-width: 800px){
+  #Grid li{
+    width: 31%;
+    padding-top: 15%;
+    margin-bottom: 4%;
+  }
+}
+
+/* 2 COL */
+
+@media (max-width: 600px){
+  #Grid li{
+    width: 48%;
+    padding-top: 23%;
+    margin-bottom: 5%;
+  }
+}
+
+/* SINGLE COL */
+
+@media (max-width: 400px){
+  #Grid li{
+    width: 100%;
+    padding-top: 49%;
+    margin-bottom: 10%;
+  }
+}

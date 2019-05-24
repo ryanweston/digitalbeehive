@@ -1,0 +1,155 @@
+@import "compass/css3";
+
+@import "compass";
+
+@mixin animation ($delay, $duration, $animation) {
+	-webkit-animation-delay: $delay;
+	-webkit-animation-duration: $duration;
+	-webkit-animation-name: $animation;
+	-webkit-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+	-moz-animation-delay: $delay;
+	-moz-animation-duration: $duration;
+	-moz-animation-name: $animation;
+	-moz-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+	animation-delay: $delay;
+	animation-duration: $duration;
+	animation-name: $animation;
+	animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+}
+@mixin keyframe ($animation_name) {
+	@-webkit-keyframes $animation_name {
+		@content;
+	}
+
+	@-moz-keyframes $animation_name {
+		@content;
+	}
+
+	@keyframes $animation_name {
+		@content;
+	}
+}
+
+@include keyframe(spin) {
+	100% {
+		@include rotate(360deg);
+	}
+}
+
+@include keyframe(endspin) {
+	100% {
+		@include rotate(360deg);
+	}
+}
+
+/* apply a natural box layout model to all elements */
+*, *:before, *:after {
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+.video{
+	width:100%;
+	height: 100%;
+	background: #000;
+	position:relative;
+}
+
+// THE BUTTON
+.playbutton{
+	display:block;
+	position:absolute;
+	top:50%;
+	left:50%;
+	width:100px;
+	height:100px;
+	margin-top:-50px;
+	margin-left:-50px;
+	text-indent: -9999;
+	color:transparent;
+	@include transition-property(all);
+	@include transition-duration(600ms);
+	@include transition-timing-function(ease-out);
+
+	&:before{
+		content:'';
+		position:absolute;
+		top:30px;
+		left:40px;
+		display: block;
+		width: 0;
+		height: 0;
+		border-top: 20px solid transparent;
+		border-bottom: 20px solid transparent;
+		border-left: 30px solid #FFF;
+		@include transition-property(all);
+		@include transition-duration(300ms);
+		@include transition-timing-function(ease-out);
+	}
+	&:after{
+		content:'';
+		opacity: 0;
+		position: absolute;
+		top:30px;
+		left:40px;
+		display: block;
+		width:30px;
+		height:40px;
+		border-left:10px solid #FFF;
+		border-right:10px solid #FFF;
+		@include transition-property(all);
+		@include transition-duration(300ms);
+		@include transition-timing-function(ease-out);
+		// FORCE 3D
+		-webkit-transform: translate3d(0, 0, 0);
+	}
+	&:hover{
+		&:after{
+			opacity: 1;
+			width:150px;
+			left:-25px;
+		}
+	}
+	&.loading{
+		&:before{
+			opacity: 0;
+		}
+		&:after{
+			opacity: 1;
+			width:150px;
+			left:-25px;
+			border-radius:3px;
+			@include experimental(animation, spin 800ms linear infinite);
+		}
+	}
+	&.playing{
+		top:90%;
+		left:90%;
+		&:after{
+			@include experimental(animation, endspin 600ms);
+			@include experimental(animation-iteration-count, 1);
+			top:30px;
+			left:40px;
+			width:30px;
+			opacity: 1;
+			opacity: .1;
+		}
+		&:before{
+			opacity: 0;
+		}
+		&:hover{
+			&:after{
+				opacity: 1;
+			}
+		}
+		&.paused{
+			&:before{
+				opacity: 1;
+			}
+			&:after{
+				opacity: 0;
+			}
+		}
+	}
+}
